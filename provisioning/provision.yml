@@ -1,0 +1,6 @@
+- hosts: all
+  sudo: yes
+  roles:
+    - role: common
+    - role: web
+    - role: database
