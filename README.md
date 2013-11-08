@@ -6,6 +6,7 @@ Configuration files to setup a vagrant box with PHP (compiled from source), Ngin
 What will be installed?
 -----------------------
 - PHP 5.5.5 with xdebug, memcached, mongo, opcache, mbstring, mysqli, openssl, zlib, curl, gd, zip, xsl, calendar and ftp
+- Composer
 - Nginx
 - Memcached
 - MongoDB
