@@ -4,6 +4,14 @@
   - mongo
   - xdebug
 
+- name: Create the xdebug remote log dir
+  file:
+    path=/var/log/xdebug
+    state=directory
+    mode=0755
+    owner=vagrant
+    group=vagrant
+
 - name: Install version 2.0.1 of memcached PECL package
   php_package:
     mode=pecl
