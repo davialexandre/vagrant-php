@@ -22,6 +22,7 @@
   - libmagic-dev
   - libgd2-xpm-dev
   - mysql-client
+  - libc-client2007e-dev
 
 - name: Download the PHP source code
   get_url:
@@ -37,7 +38,7 @@
 - name: Run ./configure
   command:
     chdir=/tmp/php-{{ php_version }}
-    ./configure --with-gd --prefix=/usr --sysconfdir=/etc --with-config-file-path=/etc/php/fpm/ --enable-fpm --with-fpm-user=vagrant --with-fpm-group=vagrant --enable-opcache --enable-mbstring --enable-mbregex --with-mysqli --with-openssl --with-curl --with-zlib --with-config-file-scan-dir=/etc/php/fpm/conf.d --with-xsl --with-pdo-mysql --with-pdo-pgsql --with-jpeg-dir=/usr --with-freetype-dir=/usr --with-t1lib  --enable-zip --with-pcre-regex --enable-calendar --enable-ftp
+    ./configure --with-gd --prefix=/usr --sysconfdir=/etc --with-config-file-path=/etc/php/fpm/ --enable-fpm --with-fpm-user=vagrant --with-fpm-group=vagrant --enable-opcache --enable-mbstring --enable-mbregex --with-mysqli --with-openssl --with-curl --with-zlib --with-config-file-scan-dir=/etc/php/fpm/conf.d --with-xsl --with-pdo-mysql --with-pdo-pgsql --with-jpeg-dir=/usr --with-freetype-dir=/usr --with-t1lib  --enable-zip --with-pcre-regex --enable-calendar --enable-ftp --with-imap=/usr/lib --with-imap-ssl --with-kerberos
 
 - name: Run make && make install
   shell:
