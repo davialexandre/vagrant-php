@@ -3,6 +3,11 @@ server {
     index index.html index.htm index.php;
 
     location / {
+        if (!-e $request_filename) {
+            rewrite  ^(.*)$  /index.php  last;
+            break;
+        }
+
         try_files $uri $uri/ /index.php;
     }
 
