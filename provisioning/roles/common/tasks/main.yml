@@ -7,6 +7,10 @@
   - subversion
   - telnet
   - man-db
+  - cpanminus
+
+- name: Install Ack from CPAN
+  cpanm: name=App::Ack
 
 - name: Copy the timezone file
   copy: src=timezone dest=/etc/timezone mode=0644 owner=root group=root
