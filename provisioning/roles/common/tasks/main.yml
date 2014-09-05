@@ -8,9 +8,29 @@
   - telnet
   - man-db
   - cpanminus
+  - zsh
 
 - name: Install Ack from CPAN
   cpanm: name=App::Ack
+
+- name: Change vagrant and root default shell to zsh
+  user: name={{ item }} shell=/usr/bin/zsh
+  with_items:
+  - vagrant
+  - root
+
+- name: Install Oh my zsh for root
+  shell: curl -L http://install.ohmyz.sh | bash creates=/root/.oh-my-zsh
+
+- name: Install Oh my zsh for vagrant
+  shell: curl -L http://install.ohmyz.sh | bash creates=/home/vagrant/.oh-my-zsh
+  sudo: no
+
+- name: Configure zsh plugins for vagrant and root
+  lineinfile: dest={{ item }}/.zshrc regexp="^plugins=\(git\)" line="plugins=(git composer sudo)"
+  with_items:
+  - /home/vagrant
+  - /root
 
 - name: Copy the timezone file
   copy: src=timezone dest=/etc/timezone mode=0644 owner=root group=root
