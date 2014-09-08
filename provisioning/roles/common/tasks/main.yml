@@ -32,6 +32,12 @@
   - /home/vagrant
   - /root
 
+- name: Configure gentoo as the zsh theme for vagrant and root
+  lineinfile: dest={{ item }}/.zshrc regexp="^ZSH_THEME=" line="ZSH_THEME=\"gentoo\""
+  with_items:
+  - /home/vagrant
+  - /root
+
 - name: Copy the timezone file
   copy: src=timezone dest=/etc/timezone mode=0644 owner=root group=root
   register: timezone_file
