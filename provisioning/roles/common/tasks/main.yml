@@ -39,3 +39,9 @@
 - name: Run dpkg-reconfigure to update the timezone
   command: dpkg-reconfigure -f noninteractive tzdata
   when: timezone_file.changed
+
+- name: Copy .vimrc for vagrant and root
+  copy: src=vimrc dest={{ item.home_dir }}/.vimrc owner={{ item.user }} mode=0664
+  with_items:
+  - { user: vagrant, home_dir: /home/vagrant }
+  - { user: root, home_dir: /root }
