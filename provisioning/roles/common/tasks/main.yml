@@ -27,7 +27,7 @@
   sudo: no
 
 - name: Configure zsh plugins for vagrant and root
-  lineinfile: dest={{ item }}/.zshrc regexp="^plugins=\(git\)" line="plugins=(git composer sudo)"
+  lineinfile: dest={{ item }}/.zshrc regexp="^plugins=\(.*\)" line="plugins=(git composer sudo)"
   with_items:
   - /home/vagrant
   - /root
