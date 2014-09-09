@@ -1,2 +1,12 @@
 - name: Install the MySQL package
   apt: name=mysql-server state=present update_cache=yes
+
+- name: Copy custom MySQL configuration file
+  copy: src=mysql/dev.cnf dest=/etc/mysql/conf.d/dev.cnf
+  notify: restart mysql
+
+- name: Make sure mysql logs directory can be accessed by all
+  file: path=/var/log/mysql mode=0775 owner=mysql group=adm
+
+- name: Make sure mysql slow queries log file exists and is readable by all
+  file: path=/var/log/mysql/mysql-slow.log mode=0664 state=touch owner=mysql group=adm

@@ -1,0 +1,3 @@
+[mysqld]
+log_slow_queries = /var/log/mysql/mysql-slow.log
+long_query_time = 1
