@@ -1,8 +1,5 @@
-- name: Install PECL packages
-  php_package: mode=pecl name={{ item }} state=present
-  with_items:
-  - mongo
-  - xdebug
+- name: Install Xdebug extension from PECL
+  php_package: mode=pecl name=xdebug state=present
 
 - name: Create the xdebug remote log dir
   file:
@@ -11,6 +8,15 @@
     mode=0755
     owner=vagrant
     group=vagrant
+
+- name: Check if Mongo extension is already installed
+  command: pecl list mongo
+  register: mongo_extension_info
+  ignore_errors: yes
+
+- name: Install Mongo extension from PECL and build it without Cyrus SASL
+  shell: yes no | pecl install mongo
+  when: "'not installed' in mongo_extension_info.stdout"
 
 - name: Install version 2.0.1 of memcached PECL package
   php_package:
