@@ -1,3 +1,3 @@
-php_version: 5.5.5
+php_version: 5.5.16
 php_tarball: php-{{ php_version }}.tar.gz
-php_tarball_sha256sum: 483ff2370fa3a8863e6b023383c4bcfcc3ba462137c30c5fc75043e1755b7d17
+php_tarball_sha256sum: cdea80ab1b0466f4656b46155e341b700799e78569a5cc582eeaededb448086c

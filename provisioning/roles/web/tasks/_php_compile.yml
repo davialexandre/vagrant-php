@@ -1,7 +1,7 @@
 - name: Install required packages to compile php
   apt: name={{ item }} state=present update_cache=yes
   with_items:
-  - autoconf 
+  - autoconf
   - automake
   - libtool
   - re2c
@@ -13,15 +13,12 @@
   - libt1-dev
   - libfreetype6-dev
   - libpq-dev
+  - libxml2-dev
   - libmysqlclient-dev
   - libxslt1-dev
-  - libxml2
-  - libxml2-dev
-  - libcurl3
-  - libcurl4-gnutls-dev
+  - libcurl4-openssl-dev
   - libmagic-dev
   - libgd2-xpm-dev
-  - mysql-client
   - libc-client2007e-dev
 
 - name: Download the PHP source code
