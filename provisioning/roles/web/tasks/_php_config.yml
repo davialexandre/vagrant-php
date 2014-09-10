@@ -43,7 +43,6 @@
 - name: Copy PHP configuration files
   copy: src={{ item.src }} dest={{ item.dest }}
   with_items:
-  - { src: 'php-fpm.conf', dest: '/etc/php/fpm/' }
   - { src: 'php.ini', dest: '/etc/php/fpm/' }
   - { src: 'xdebug.ini', dest: '/etc/php/fpm/conf.d/' }
   - { src: 'memcached.ini', dest: '/etc/php/fpm/conf.d/' }
@@ -52,8 +51,29 @@
   notify:
     - restart php-fpm
 
+- name: Copy the PHP-FPM configuration file
+  template: src=php-fpm.conf.j2 dest=/etc/php/fpm/php-fpm.conf
+  notify:
+    - restart php-fpm
+
 - name: Remove the php-fpm.conf example file, installed with php
   file: path=/etc/php-fpm.conf.default state=absent
+
+- name: Create the PHP-FPM logs directory
+  file:
+    path={{ php_fpm_log_dir }}
+    state=directory
+    mode=775
+    owner=vagrant
+    group=vagrant
+
+- name: Create the PHP-FPM logs directory
+  file:
+    path={{ php_fpm_log_dir }}/www.log.slow
+    state=touch
+    mode=664
+    owner=vagrant
+    group=vagrant
 
 - name: Install composer
   shell:
