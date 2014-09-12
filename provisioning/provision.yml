@@ -4,3 +4,4 @@
     - role: common
     - role: web
     - role: database
+    - role: logserver

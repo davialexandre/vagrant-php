@@ -3,3 +3,5 @@ php_tarball: php-{{ php_version }}.tar.gz
 php_tarball_sha256sum: cdea80ab1b0466f4656b46155e341b700799e78569a5cc582eeaededb448086c
 
 php_fpm_log_dir: /var/log/php-fpm
+
+logstash_patterns_dir: /etc/logstash/conf.d/patterns
