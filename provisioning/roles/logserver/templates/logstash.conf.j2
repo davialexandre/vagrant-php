@@ -76,7 +76,7 @@ filter {
         }
 
         date {
-            match => [ "timestamp" , "dd-MMM-yyyy HH:mm:ss" ]
+            match => [ "timestamp" , "[dd-MMM-yyyy HH:mm:ss]" ]
             timezone => "America/Sao_Paulo"
         }
     }
