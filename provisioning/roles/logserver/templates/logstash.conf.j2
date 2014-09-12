@@ -59,10 +59,6 @@ filter {
         date {
             match => [ "timestamp", "UNIX" ]
         }
-
-        mutate {
-            remove_field => "timestamp"
-        }
     }
 
     if [type] == "php-fpm_slowlog" {
@@ -79,6 +75,10 @@ filter {
             match => [ "timestamp" , "[dd-MMM-yyyy HH:mm:ss]" ]
             timezone => "America/Sao_Paulo"
         }
+    }
+
+    mutate {
+        remove_field => "timestamp"
     }
 }
 
