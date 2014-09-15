@@ -1,0 +1,32 @@
+input {
+    file {
+        path => "/var/log/php-fpm/*.log.slow"
+        start_position => beginning
+        type => "php-fpm_slowlog"
+        codec => multiline {
+            pattern => "^%{PHPFPMSLOWLOGDATE}"
+            patterns_dir => [ "{{ logstash_patterns_dir}}" ]
+            negate => true
+            what => previous
+        }
+    }
+}
+
+filter {
+    if [type] == "php-fpm_slowlog" {
+        grok {
+            match => { "message" => "^%{PHPFPMSLOWLOGDATE:timestamp}  \[pool %{DATA:pool}\] pid %{NUMBER:pid}" }
+            patterns_dir => [ "{{ logstash_patterns_dir}}" ]
+        }
+
+        grok {
+            match => { "message" => "^script_filename = %{GREEDYDATA:script_filename}" }
+        }
+
+        date {
+            match => [ "timestamp" , "[dd-MMM-yyyy HH:mm:ss]" ]
+            timezone => "America/Sao_Paulo"
+        }
+    }
+}
+

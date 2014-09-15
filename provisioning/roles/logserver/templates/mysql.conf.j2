@@ -1,0 +1,37 @@
+input {
+    file {
+        path => "/var/log/mysql/mysql-slow.log"
+        start_position => beginning
+        type => "mysql_slowlog"
+        codec => multiline {
+            pattern => "^# (User@Host|Time):"
+            what => next
+        }
+    }
+}
+
+filter {
+    if [type] == "mysql_slowlog" {
+        multiline {
+            pattern => "^# (User@Host|Time):"
+            negate => true
+            what => previous
+        }
+
+        grok {
+            match => { "message" => "^# User@Host: %{USER:user}(?:\[[^\]]+\])?\s+@\s+%{HOST:host}?\s+\[%{IP:ip}?\]" }
+        }
+
+        grok {
+            match => { "message" => "^# Query_time: %{NUMBER:duration:float}\s+Lock_time: %{NUMBER:lock_wait:float} Rows_sent: %{NUMBER:results:int} \s*Rows_examined: %{NUMBER:scanned:int}" }
+        }
+
+        grok {
+            match => { "message" => "^SET timestamp=%{NUMBER:timestamp};" }
+        }
+
+        date {
+            match => [ "timestamp", "UNIX" ]
+        }
+    }
+}

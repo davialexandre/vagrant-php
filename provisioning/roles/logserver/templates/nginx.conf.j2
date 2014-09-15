@@ -1,0 +1,20 @@
+input {
+    file {
+        path => "/var/log/nginx/access.log"
+        start_position => beginning
+        type => "nginx_accesslog"
+    }
+}
+
+filter {
+    if [type] == "nginx_accesslog" {
+        grok {
+            match => { "message" => "%{COMBINEDAPACHELOG}" }
+        }
+
+        date {
+            match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+        }
+    }
+}
+

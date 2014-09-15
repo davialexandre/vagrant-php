@@ -9,8 +9,13 @@
   with_items:
   - logstash
 
-- name: Copy the logstash configuration file
-  template: src=logstash.conf.j2 dest=/etc/logstash/conf.d/logstash.conf
+- name: Copy the logstash configuration files
+  template: src={{ item }}.j2 dest=/etc/logstash/conf.d/{{ item }}
+  with_items:
+  - logstash.conf
+  - mysql.conf
+  - nginx.conf
+  - php-fpm.conf
   notify:
   - restart logstash
 
