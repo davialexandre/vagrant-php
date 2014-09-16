@@ -16,6 +16,7 @@
   - mysql.conf
   - nginx.conf
   - php-fpm.conf
+  - mongodb.conf
   notify:
   - restart logstash
 

@@ -1,0 +1,44 @@
+input {
+    file {
+        path => "/var/log/mongodb/mongodb.log"
+        start_position => beginning
+        type => "mongodb"
+    }
+}
+
+filter {
+    if [type] == "mongodb" {
+        grok {
+            match => { "message" => "%{MONGODBLOG}" }
+            patterns_dir => [ "{{ logstash_patterns_dir}}" ]
+        }
+
+        grok {
+            match => { "message" => "\[conn(?<connection_number>\d+?)\]" }
+        }
+
+        grok {
+            match => { "message" => "connection accepted from %{IP}:%{POSINT} #(?<connection_number>\d+?)" }
+        }
+
+        grok {
+            match => { "message" => "\*\*\*\*\* SERVER RESTARTED \*\*\*\*\*" }
+            add_tag => [ "remove" ]
+        }
+        
+        grok {
+            match => { "message" => "^$" }
+            add_tag => [ "remove" ]
+        }
+        
+        #Adds the current year to the timestamp field
+        mutate {
+            replace => [ "timestamp", "%{+yyyy} %{timestamp}" ]
+        }
+        
+        date {
+            match => [ "timestamp", "yyyy EEE MMM dd HH:mm:ss.SSS" ]       
+        }
+    }
+}
+
