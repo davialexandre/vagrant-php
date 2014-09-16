@@ -23,6 +23,11 @@ filter {
             match => { "message" => "^script_filename = %{GREEDYDATA:script_filename}" }
         }
 
+        grok {
+            match => { "message" => "^$" }
+            add_tag => [ "remove" ]
+        }
+
         date {
             match => [ "timestamp" , "[dd-MMM-yyyy HH:mm:ss]" ]
             timezone => "America/Sao_Paulo"

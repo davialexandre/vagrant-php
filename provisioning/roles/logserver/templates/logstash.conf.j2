@@ -2,6 +2,10 @@ filter {
     mutate {
         remove_field => "timestamp"
     }
+
+    if "remove" in [tags] {
+        drop {}
+    }
 }
 
 output {
