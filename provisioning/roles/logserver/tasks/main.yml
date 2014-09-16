@@ -12,11 +12,11 @@
 - name: Copy the logstash configuration files
   template: src={{ item }}.j2 dest=/etc/logstash/conf.d/{{ item }}
   with_items:
-  - logstash.conf
-  - mysql.conf
-  - nginx.conf
-  - php-fpm.conf
-  - mongodb.conf
+  - 0mysql.conf
+  - 0nginx.conf
+  - 0php-fpm.conf
+  - 0mongodb.conf
+  - 9logstash.conf
   notify:
   - restart logstash
 
