@@ -4,6 +4,12 @@
 - name: Copy the nginx.conf file
   copy: src=nginx.conf dest=/etc/nginx/nginx.conf mode=0644 owner=root group=root
 
+- name: Create the nginx log files and set its permissions
+  file: path=/var/log/nginx/{{ item }} mode=0644 owner=vagrant group=adm state=touch
+  with_items:
+  - access.log
+  - error.log
+
 - name: Update the nginx default host file
   copy: src=default_nginx_host dest=/etc/nginx/sites-available/default
   notify:
