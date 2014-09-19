@@ -38,6 +38,9 @@
   - /home/vagrant
   - /root
 
+- name: Copy the .zprofile configuration file for vagrant
+  copy: src=.zprofile dest=/home/vagrant owner=vagrant
+
 - name: Copy the timezone file
   copy: src=timezone dest=/etc/timezone mode=0644 owner=root group=root
   register: timezone_file
